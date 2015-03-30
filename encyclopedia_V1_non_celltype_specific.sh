@@ -1,5 +1,5 @@
 # Operations on data
-./processNewMasterList.sh
+./processDNaseMasterList.sh
 ./processHismods.sh
 ./processTFPeaks.sh
 # END Operations on data
