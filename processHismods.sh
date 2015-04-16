@@ -5,7 +5,7 @@ awk '{ printf("%s\t%d\t%d\tline_%d\n",$1,($2+$3)/2,($2+$3)/2,NR)}' $HOME/nearlin
 
 # Generate matching background. 
 bedtools shuffle -i $HOME/nearline/decorate_dnase/dnase_master_V2/multi-tissue.master.v2.distal.1000.bed -g $HOME/TR/hg19.genome -excl $HOME/nearline/decorate_dnase/dnase_master_V2/distal_excludable.bed > $HOME/nearline/decorate_dnase/dnase_master_V2/randombg.1000.distal.bed
-bedtools shuffle -i $HOME/nearline/decorate_dnase/dnase_master_V2/multi-tissue.master.v2.proximal.1000.bed -g $HOME/TR/hg19.genome -excl $HOME/nearline/decorate_dnase/dnase_master_V2/proximal_excludable.bed -incl  $HOME/nearline/enhancer_predictions/gencodeV19_2K_promoter.bed > $HOME/nearline/decorate_dnase/dnase_master_V2/randombg.1000.proximal.bed
+bedtools shuffle -i $HOME/nearline/decorate_dnase/dnase_master_V2/multi-tissue.master.v2.proximal.1000.bed -g $HOME/TR/hg19.genome -excl $HOME/nearline/decorate_dnase/dnase_master_V2/proximal_excludable.bed -incl  $HOME/nearline/decorate_dnase/gencode.v19.TSS_plusminus_2K.sorted.bed > $HOME/nearline/decorate_dnase/dnase_master_V2/randombg.1000.proximal.bed
 
 # Calculate signal in foregroud and background for all histone mods
 for signal_file in $HOME/nearline/decorate_dnase/dnase_master_V2/allhismodsignals/*bw
@@ -27,7 +27,8 @@ done
 # Code to calculate percentile over background for all histone mods
 Rscript processHismods.R
 
-# paste hismod percentiles across all celltypes with DNase master peaks to get one giant bed file for each hismod
+# paste hismod percentiles across all celltypes with DNase master peaks to get one giant bed file for each hismod where enrichment in each cell type is a name value pair <celltype>=<percentilea
+
 for hismod in {"H3K27ac","H3K4me1","H3K4me3","H3K9ac"}
 do
         for distance in {"distal","proximal"}

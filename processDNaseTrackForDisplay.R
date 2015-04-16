@@ -18,11 +18,13 @@ getCleanCellName <- function(cellLine)
 #chr1   13240   13390   fMuscle_leg-DS20797     4.79596 fMuscle_leg-DS20797
 #chr1   13900   14050   fLung_L-DS18170 11.6808 fLung-DS12817;fLung_L-DS18170;fLung_R-DS16790
 
-#chr1   540640  540790  Hsmm    38      Hsmm,Nhdfad     38,29   2
-#chr1   540880  541030  Nhdfad  26      Nhdfad  26      1
-#chr1   559280  559430  Nhdfad  59.000000       Hsmm,Nhdfad     43,59.000000    2
+inputFile <- commandArgs(TRUE)[1]
+outputFile <- commandArgs(TRUE)[2]
+color <- commandArgs(TRUE)[3]
+
+
 cellLineMapping <- as.data.frame(read.table("code_cellnames.txt", row.names=1, sep="\t"))
-df <- as.data.frame(read.table("multi-tissue.master.v2.distal.bed",sep="\t"))
+df <- as.data.frame(read.table(inputFile,sep="\t"))
 max_sig <- max(as.numeric(df[,5]))
 min_sig <- min(as.numeric(df[,5]))
 normalized_score_signal <- sapply(df[,5], FUN=normalizeto1000Scale, max=max_sig, min=min_sig)
@@ -33,6 +35,6 @@ print(unique_cell_types_clean)
 #total_peaks_merged <- as.numeric(lapply(cell_types,FUN=length))
 number_unique_cell_types_merged <- as.numeric(lapply(strsplit(unique_cell_types_clean, split=","),FUN=length))
 
-dnase_signal_track <- data.frame(df[,1],df[,2],df[,3],paste("re",gsub(df[,1],pattern="chr",replacement=""),".",floor((df[,2]+df[,3])/2),sep=""),normalized_score_signal, ".", df[,2],df[,3], "94,207,74", unique_cell_types_clean,number_unique_cell_types_merged)
+dnase_signal_track <- data.frame(df[,1],df[,2],df[,3],paste("re",gsub(df[,1],pattern="chr",replacement=""),".",floor((df[,2]+df[,3])/2),sep=""),normalized_score_signal, ".", df[,2],df[,3], color, unique_cell_types_clean,number_unique_cell_types_merged)
 
-write.table(x=dnase_signal_track, file="dnase.distal.bed", sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
+write.table(x=dnase_signal_track, file=outputFile, sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)

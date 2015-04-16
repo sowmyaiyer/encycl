@@ -17,20 +17,20 @@ tabix dnase.proximal.washu.bed.gz
 
 ########## Hismod operations  ##########
 # Process data
-./processHismods.sh
+./processHismods_cellType_specific.sh
 # Display for UCSC browser
-./processHismodTracks_for_display.sh
+./processHismodsDisplay_cellType_specific.sh
 # Display for WashU browser
-./processHismodTracks_for_display_washu.sh
+./processHismodsDisplay_celltype_specific_washu.sh
 
 # Compress for washu hammock track
 for hismod in {"H3K27ac","H3K4me1","H3K9ac","H3K4me3"}
 do
         echo $hismod
-        bgzip distal.${hismod}.washu.formatted.bed
-        tabix distal.${hismod}.washu.formatted.bed.gz
-        bgzip proximal.${hismod}.washu.formatted.bed
-        tabix proximal.${hismod}.washu.formatted.bed.gz
+        bgzip distal.${hismod}.washu.formatted.cellType_specific.bed
+        tabix distal.${hismod}.washu.formatted.bed.cellType_specific.gz
+        bgzip proximal.${hismod}.washu.formatted.cellType_specific.bed
+        tabix proximal.${hismod}.washu.formatted.bed.cellType_specific.gz
 done
 
 ########## END hismod operations ##########
@@ -49,5 +49,4 @@ tabix tf_washu_distal.display.bed.gz
 
 bgzip tf_washu_proximal.display.bed
 tabix tf_washu_proximal.display.bed.gz
-
 ######### END TF operations ############

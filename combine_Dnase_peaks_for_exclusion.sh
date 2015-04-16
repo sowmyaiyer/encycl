@@ -24,7 +24,7 @@ awk '{ print $1"\t"$2"\t"$3 >> "/home/si14w/nearline/decorate_dnase/alldnase/all
 ## Include the following line if creating exclusion file for distant random bg regions
 if [[ $type == "distal" ]]; then
 	echo distal
-	awk '{ print $1"\t"$2"\t"$3 >> "/home/si14w/nearline/decorate_dnase/alldnase/alldnase."$1".bed"}' $HOME/nearline/enhancer_predictions/gencodeV19_2K_promoter.bed
+	awk '{ print $1"\t"$2"\t"$3 >> "/home/si14w/nearline/decorate_dnase/alldnase/alldnase."$1".bed"}' $HOME/nearline/decorate_dnase/gencode.v19.TSS_plusminus_2K.sorted.bed
 fi
 for f in $HOME/nearline/decorate_dnase/alldnase/alldnase.chr*.bed
 do
